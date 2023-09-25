@@ -14,5 +14,15 @@ public class db_operations {
 		   JOptionPane.showMessageDialog(null, e,"Message",JOptionPane.ERROR_MESSAGE);
 	   }
    }
-   
+   public static ResultSet getdata(String Query) {
+	   try {
+		   Connection con=connection.getConnection();
+		   Statement st= con.createStatement();
+		   ResultSet rs=st.executeQuery(Query);
+		   return rs;
+	   }catch(Exception e) {
+		   JOptionPane.showMessageDialog(null, e, "message", JOptionPane.ERROR_MESSAGE);
+		   return null;
+	   }
+   }
 }
