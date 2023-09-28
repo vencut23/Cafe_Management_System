@@ -11,6 +11,6 @@ public class Queries {
 			+ "    SecurityQuestion VARCHAR(255),"
 			+ "    Answer VARCHAR(255)"
 			+ ");";
-	
+	public final static String INSERT_ADMIN="INSERT INTO UserInformation (Name, EmailAddress, PhoneNumber, Password, SecurityQuestion, Answer,status) values('Admin','admin@gmail.com','1234567890','admin','what is your name?','admin','true'); "; 
 	    
 }

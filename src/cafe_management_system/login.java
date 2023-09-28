@@ -57,7 +57,7 @@ public class login extends JFrame {
 		btnlogin.setEnabled(false);
 	}
 	public void validatefield() {
-		if((mailfield.getText().matches(mailformat))&&(passwordField.getText().matches(passformat))) {
+		if((mailfield.getText().matches(mailformat))&&!(passwordField.equals(""))) {
 			btnlogin.setEnabled(true);
 		}else {
 			btnlogin.setEnabled(false);
@@ -76,7 +76,7 @@ public class login extends JFrame {
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 38));
 		lblLogin.setBounds(562, 116, 186, 88);
-		contentPane.add(lblLogin);
+ 		contentPane.add(lblLogin);
 		
 		JLabel lblNewLabel = new JLabel("Email");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -162,16 +162,28 @@ public class login extends JFrame {
 		contentPane.add(btnExit);
 		
 		btnForgetPassword = new JButton("Forget Password");
+		btnForgetPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new ForgetPassword().setVisible(true);
+			}
+		});
 		btnForgetPassword.setBounds(448, 437, 143, 23);
 		contentPane.add(btnForgetPassword);
 		
 		btnSignUp = new JButton("Sign Up");
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new signin().setVisible(true);
+			}
+		});
 		btnSignUp.setBounds(710, 437, 89, 23);
 		contentPane.add(btnSignUp);
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(login.class.getResource("/image/first page background.PNG")));
-		lblNewLabel_1.setBounds(0, 11, 1363, 690);
+		lblNewLabel_1.setBounds(0, 0, 1363, 690);
 		contentPane.add(lblNewLabel_1);
 	}
 }

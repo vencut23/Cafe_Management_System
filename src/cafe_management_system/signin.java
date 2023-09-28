@@ -262,10 +262,22 @@ public class signin extends JFrame {
 		contentPane.add(btnExit);
 		
 		JButton btnForgetPassword = new JButton("FORGET PASSWORD?");
+		btnForgetPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new ForgetPassword().setVisible(true);
+			}
+		});
 		btnForgetPassword.setBounds(501, 579, 170, 23);
 		contentPane.add(btnForgetPassword);
 		
 		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new login().setVisible(true);
+			}
+		});
 		btnLogin.setIcon(new ImageIcon(Signup.class.getResource("/image/login.png")));
 		btnLogin.setBounds(822, 579, 106, 23);
 		contentPane.add(btnLogin);

@@ -30,6 +30,26 @@ public class user_db {
 		   JOptionPane.showMessageDialog(null, e);
 		   return user;
 	   }
-	   
+	  
+   }
+   public static User search(String email) {
+	   String Query= "select * from UserInformation where emailaddress='"+email+"';";
+	   User user=null;
+	   try {
+		   ResultSet rs=db_operations.getdata(Query);
+		   while(rs.next()) {
+			   user=new User(); 
+		   user.setSecurityQuestion(rs.getString("SecurityQuestion"));
+		   user.setAnswer(rs.getString("answer"));
+		   }
+		   return user;
+	   }catch(Exception e) {
+		   JOptionPane.showMessageDialog(null, e);
+	   }
+	   return user;
+   }
+   public static void update(String email,String password) {
+	   String Query="update UserInformation set password ='"+password+"' where emailaddress='"+email+"';";
+	   db_operations.updatedb(Query,"User password updated succesfully");
    }
 }
