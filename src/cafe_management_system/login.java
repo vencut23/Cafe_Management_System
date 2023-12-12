@@ -129,7 +129,7 @@ public class login extends JFrame {
 						clear();
 					}else if(user.getStatus().equals("true")){
 						setVisible(false);
-						
+						new Home(mailfield.getText()).setVisible(true);
 					}
 				}
 			}
