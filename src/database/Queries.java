@@ -17,4 +17,11 @@ public class Queries {
 			+ "    name VARCHAR(50) NOT NULL,\r\n"
 			+ "    PRIMARY KEY (id)\r\n"
 			+ "); ";
+	public static final String Product_Table="CREATE TABLE product (\r\n"
+			+ "    id INT AUTO_INCREMENT PRIMARY KEY,\r\n"
+			+ "    name VARCHAR(255) NOT NULL,\r\n"
+			+ "    category VARCHAR(100),\r\n"
+			+ "    price VARCHAR(100)\r\n"
+			+ ");";
+
 }

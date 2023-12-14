@@ -121,6 +121,11 @@ public class Home extends JFrame {
 		contentPane.add(btnManageCatagory);
 		
 		btnNewProduct = new JButton("New Product");
+		btnNewProduct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new AddNewItem().setVisible(true);
+			}
+		});
 		btnNewProduct.setIcon(new ImageIcon(Home.class.getResource("/image/new product.png")));
 		btnNewProduct.setBounds(466, 646, 142, 33);
 		contentPane.add(btnNewProduct);
