@@ -78,6 +78,8 @@ public class Home extends JFrame {
 		btnPlaceOrder.setIcon(new ImageIcon(Home.class.getResource("/image/place order.png")));
 		btnPlaceOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new PlaceOrder(mail).setVisible(true);
 			}
 		});
 		btnPlaceOrder.setBounds(341, 11, 146, 33);
@@ -131,11 +133,21 @@ public class Home extends JFrame {
 		contentPane.add(btnNewProduct);
 		
 		btnVED = new JButton("View Edit and Delete Product");
+		btnVED.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ViewEditProduct().setVisible(true);
+			}
+		});
 		btnVED.setIcon(new ImageIcon(Home.class.getResource("/image/view edit delete product.png")));
 		btnVED.setBounds(618, 646, 243, 33);
 		contentPane.add(btnVED);
 		
 		btnVierifyUser = new JButton("Vierify User");
+		btnVierifyUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Verify_Users().setVisible(true);
+			}
+		});
 		btnVierifyUser.setIcon(new ImageIcon(Home.class.getResource("/image/verify users.png")));
 		btnVierifyUser.setBounds(871, 646, 147, 33);
 		contentPane.add(btnVierifyUser);

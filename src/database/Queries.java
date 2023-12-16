@@ -23,5 +23,6 @@ public class Queries {
 			+ "    category VARCHAR(100),\r\n"
 			+ "    price VARCHAR(100)\r\n"
 			+ ");";
+	public static final String BILL_TABLE= "Create table BillTable(id INT primary key,name varchar(200),MobileNumber varchar(200),Email varchar(200),date varchar(200),total varchar(200),createdby varchar(200));";
 
 }

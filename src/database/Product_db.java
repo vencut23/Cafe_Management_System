@@ -2,6 +2,8 @@ package database;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import model.Product;
 public class Product_db {
     
@@ -38,5 +40,51 @@ public class Product_db {
                 "', price = '" + p.getPrice() +
                 "' WHERE id = " +p.getId()+";";
 		db_operations.updatedb(Query, "Updated succesfully");
+	}
+	public static ArrayList<Product> getBycategory(String cat){
+		String Query="select * from product where category='"+cat+"';";
+		ArrayList<Product> al = new ArrayList<>();
+		try {
+			ResultSet rs = db_operations.getdata(Query);
+			while(rs.next()) {
+				Product p = new Product();
+				p.setName(rs.getString("name"));
+				al.add(p);
+			}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
+		return al;
+	}
+	public static ArrayList<Product> getByname(String cat,String name){
+		String Query="select * from product where name like '%"+name+"%' and category='"+cat+"'";
+		ArrayList<Product> al = new ArrayList<>();
+		try {
+			ResultSet rs = db_operations.getdata(Query);
+			while(rs.next()) {
+				Product p = new Product();
+				p.setName(rs.getString("name"));
+				al.add(p);
+			}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
+		return al;
+	}
+	public static Product getproductdetail(String name) {
+		Product p= new Product();
+		String Query= "select * from product where name='"+name+"'";
+		try {
+			ResultSet rs = db_operations.getdata(Query);
+			while(rs.next()) {
+				p.setName(rs.getString("name"));
+				p.setCategory(rs.getString("category"));
+	            p.setPrice(rs.getString("price"));
+	            p.setId(Integer.parseInt(rs.getString("id")));
+			}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
+		return p;
 	}
 }
