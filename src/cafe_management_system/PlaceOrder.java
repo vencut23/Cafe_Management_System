@@ -1,4 +1,4 @@
-package cafe_management_system;
+ package cafe_management_system;
 
 import java.awt.EventQueue;
 
@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -17,9 +18,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import Common.OpenPDF;
 import database.Bill_db;
 import database.Product_db;
 import database.category_db;
+import model.Bill;
 import model.Product;
 import model.category;
 
@@ -33,6 +40,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.event.ChangeListener;
@@ -84,7 +94,7 @@ public class PlaceOrder extends JFrame {
 	public PlaceOrder(String email) {
 		this();
 		btngeneretebill.setEnabled(false);
-		btnClear.setEnabled(false);
+		//btnClear.setEnabled(false);
 		btnaddtocart.setEnabled(false);
 		tfprice.setEditable(false);
 		tftotal.setEditable(false);
@@ -100,8 +110,9 @@ public class PlaceOrder extends JFrame {
 			
 				loadcategory();
 				loadbycategory();
-				billid=Integer.parseInt(Bill_db.getId());
+				billid=Integer.parseInt(Bill_db.getId())+billid;
 				lblid.setText(billid+"");
+				btnClear.setEnabled(true);
 			}
 		});
 		setUndecorated(true);
@@ -114,6 +125,69 @@ public class PlaceOrder extends JFrame {
 		contentPane.setLayout(null);
 		
 		btngeneretebill = new JButton("Generate and View Bill");
+		btngeneretebill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name=tfname.getText();
+				String mail=tfemail.getText();
+				String number=tfmobilenumber.getText();
+				String total=lbltotal.getText();
+				SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+				Date date=new Date(22,33,44);
+				String todaydate=format.format(date);
+				String creaatedby= usermail;
+				Bill bill=new Bill();
+				bill.setName(name);
+				bill.setEmail(mail);
+				bill.setCreatedby(creaatedby);
+				bill.setDate(todaydate);
+				bill.setMobileNumber(number);
+				bill.setTotal(total);
+				bill.setId(billid);
+				Bill_db.save(bill);
+				
+				String path="C:\\";;
+				com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+				try {
+					PdfWriter.getInstance(doc, new FileOutputStream(path+""+billid+".pdf"));
+					doc.open();
+					Paragraph star=new Paragraph("**********************************************************************************************");
+					doc.add(star);
+					Paragraph cafe=new Paragraph("                                          Cafe Project\n");
+					doc.add(cafe);
+					doc.add(star);
+					PdfPTable table=new PdfPTable(4);
+					table.addCell("Name");
+					table.addCell("Price");
+					table.addCell("Quantity");
+					table.addCell("Total");
+					for(int a=0;a<tablebill.getRowCount();a++) {
+						String n=tablebill.getValueAt(a, 0).toString();
+						String p=tablebill.getValueAt(a, 1).toString();
+						String q=tablebill.getValueAt(a, 2).toString();
+						String v=tablebill.getValueAt(a, 3).toString();
+						table.addCell(n);
+						table.addCell(p);
+						table.addCell(q);
+						table.addCell(v);
+					}
+					doc.add(table);
+					doc.add(star);
+					Paragraph totalpara=new Paragraph("Grand Total"+grandtotal+"");
+					doc.add(star);
+					doc.add(totalpara);
+					doc.add(star);
+					Paragraph thanks = new Paragraph("Thanks for Coming...!Visit Again..!");
+					doc.add(thanks);
+					OpenPDF.openByid(String.valueOf(billid));
+					doc.close();
+					
+				}catch(Exception e1){
+					JOptionPane.showMessageDialog(null, e1);
+				}
+				setVisible(false);
+				new PlaceOrder(usermail).setVisible(true);
+			}
+		});
 		btngeneretebill.setIcon(new ImageIcon(PlaceOrder.class.getResource("/image/generate bill & print.png")));
 		btngeneretebill.setBounds(1132, 721, 178, 23);
 		contentPane.add(btngeneretebill);
@@ -159,6 +233,12 @@ public class PlaceOrder extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		tfname = new JTextField();
+		tfname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				vaildatee();
+			}
+		});
 		tfname.setBounds(49, 195, 186, 20);
 		contentPane.add(tfname);
 		tfname.setColumns(10);
@@ -168,6 +248,12 @@ public class PlaceOrder extends JFrame {
 		contentPane.add(lblNewLabel_5);
 		
 		tfmobilenumber = new JTextField();
+		tfmobilenumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				vaildatee();
+			}
+		});
 		tfmobilenumber.setBounds(49, 282, 186, 20);
 		contentPane.add(tfmobilenumber);
 		tfmobilenumber.setColumns(10);
@@ -177,6 +263,12 @@ public class PlaceOrder extends JFrame {
 		contentPane.add(lblNewLabel_6);
 		
 		tfemail = new JTextField();
+		tfemail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				vaildatee();
+			}
+		});
 		tfemail.setBounds(49, 377, 186, 20);
 		contentPane.add(tfemail);
 		tfemail.setColumns(10);
@@ -284,11 +376,40 @@ public class PlaceOrder extends JFrame {
 		contentPane.add(btnClear);
 		
 		btnaddtocart = new JButton("Add To Cart");
+		btnaddtocart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name=tfname2.getText();
+				String price=tfprice.getText();
+				String quantity= String.valueOf(spinner.getValue());
+				String total=tftotal.getText();
+				DefaultTableModel dtm =(DefaultTableModel) tablebill.getModel();
+				dtm.addRow(new Object[] {name,price,quantity,total});
+				grandtotal=grandtotal+Integer.parseInt(total);
+				lbltotal.setText(grandtotal+"");
+				clear();
+				vaildatee();
+			}
+		});
 		btnaddtocart.setIcon(new ImageIcon(PlaceOrder.class.getResource("/image/add to cart.png")));
 		btnaddtocart.setBounds(1113, 243, 131, 23);
 		contentPane.add(btnaddtocart);
 		
 		tablebill = new JTable();
+		tablebill.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index=tablebill.getSelectedRow();
+				TableModel tm = tablebill.getModel();
+				String total = tm.getValueAt(index, 3).toString();
+				int a=JOptionPane.showConfirmDialog(null, "Do you want to delete item","select",JOptionPane.YES_NO_OPTION);
+				if(a==0) {
+			    grandtotal=grandtotal-Integer.parseInt(total);
+			    lbltotal.setText(grandtotal+"");
+			    
+				((DefaultTableModel)tablebill.getModel()).removeRow(index);
+				}
+			}
+		});
 		tablebill.setBorder(new LineBorder(new Color(0, 0, 0)));
 		tablebill.setBounds(601, 326, 709, 372);
 		tablebill.setModel(new DefaultTableModel(

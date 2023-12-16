@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import model.Bill;
+
 public class Bill_db {
      
 	public static String getId() {
@@ -18,6 +20,10 @@ public class Bill_db {
 			 JOptionPane.showMessageDialog(null, e);
 		 }
 		 return String.valueOf(id);
+	}
+	public static void save(Bill bill) {
+		String Query="insert into billtable (id,name,MobileNumber,Email,date,total,createdby) values('"+bill.getId()+"','"+bill.getName()+"','"+bill.getEmail()+"','"+bill.getMobileNumber()+"','"+bill.getDate()+"','"+bill.getTotal()+"','"+bill.getCreatedby()+"');";
+		db_operations.updatedb(Query,"bill data added succesfully");
 	}
 	
 }
