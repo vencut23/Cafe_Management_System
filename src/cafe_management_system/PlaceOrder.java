@@ -178,8 +178,9 @@ public class PlaceOrder extends JFrame {
 					doc.add(star);
 					Paragraph thanks = new Paragraph("Thanks for Coming...!Visit Again..!");
 					doc.add(thanks);
-					OpenPDF.openByid(String.valueOf(billid));
 					doc.close();
+					OpenPDF.openByid(String.valueOf(billid));
+					
 					
 				}catch(Exception e1){
 					JOptionPane.showMessageDialog(null, e1);

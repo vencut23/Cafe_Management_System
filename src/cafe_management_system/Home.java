@@ -71,7 +71,17 @@ public class Home extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(221, 11, 110, 33);
+		
+		JButton btnNewButton_1 = new JButton("Change Security Question");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ChangeSequrityQuestion(mail).setVisible(true);
+			}
+		});
+		btnNewButton_1.setIcon(new ImageIcon(Home.class.getResource("/image/change Security Question.png")));
+		btnNewButton_1.setBounds(846, 11, 255, 33);
+		contentPane.add(btnNewButton_1);
+		btnNewButton.setBounds(79, 11, 110, 33);
 		contentPane.add(btnNewButton);
 		
 		JButton btnPlaceOrder = new JButton("Place Order");
@@ -82,21 +92,27 @@ public class Home extends JFrame {
 				new PlaceOrder(mail).setVisible(true);
 			}
 		});
-		btnPlaceOrder.setBounds(341, 11, 146, 33);
+		btnPlaceOrder.setBounds(199, 11, 146, 33);
 		contentPane.add(btnPlaceOrder);
 		
 		JButton btnViewOrderAnd = new JButton("view Order and order Placed Details");
 		btnViewOrderAnd.setIcon(new ImageIcon(Home.class.getResource("/image/View Bills & Order Placed Details.png")));
 		btnViewOrderAnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				new ViewBilldetails().setVisible(true)
+;			}
 		});
-		btnViewOrderAnd.setBounds(497, 11, 276, 33);
+		btnViewOrderAnd.setBounds(355, 11, 276, 33);
 		contentPane.add(btnViewOrderAnd);
 		
 		JButton btnChangePassword = new JButton("Change Password");
+		btnChangePassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ChangePassword(mail).setVisible(true);
+			}
+		});
 		btnChangePassword.setIcon(new ImageIcon(Home.class.getResource("/image/change Password.png")));
-		btnChangePassword.setBounds(783, 11, 195, 33);
+		btnChangePassword.setBounds(641, 11, 195, 33);
 		contentPane.add(btnChangePassword);
 		
 		JButton btnExit = new JButton("Exit");
@@ -109,7 +125,7 @@ public class Home extends JFrame {
 				}
 			}
 		});
-		btnExit.setBounds(988, 11, 89, 33);
+		btnExit.setBounds(1114, 11, 89, 33);
 		contentPane.add(btnExit);
 		
 	     btnManageCatagory = new JButton("Manage Catagory");
@@ -148,6 +164,10 @@ public class Home extends JFrame {
 				new Verify_Users().setVisible(true);
 			}
 		});
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(Home.class.getResource("/image/home-background-image.png")));
+		lblNewLabel.setBounds(0, 0, 1363, 690);
+		contentPane.add(lblNewLabel);
 		btnVierifyUser.setIcon(new ImageIcon(Home.class.getResource("/image/verify users.png")));
 		btnVierifyUser.setBounds(871, 646, 147, 33);
 		contentPane.add(btnVierifyUser);
@@ -155,9 +175,5 @@ public class Home extends JFrame {
 		btnManageCatagory.setVisible(false);
 		 btnNewProduct.setVisible(false);
 		 btnVierifyUser.setVisible(false);
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(Home.class.getResource("/image/home-background-image.png")));
-		lblNewLabel.setBounds(0, 0, 1363, 690);
-		contentPane.add(lblNewLabel);
 	}
 }

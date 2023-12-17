@@ -77,4 +77,51 @@ public class user_db {
 	   String Query="update UserInformation set Status ='"+Status+"' where EmailAddress='"+Email+"';";
 	   db_operations.updatedb(Query, "Status Changed successfully");
    }
+   
+   public static void changepassword(String email,String oldpassword,String newpassword) {
+	   try {
+		   ResultSet rs = db_operations.getdata("select * from userInformation where emailaddress='"+email+"' and password='"+oldpassword+"';");
+		   if(rs.next()) {
+			   update(email,newpassword);
+		   }else {
+			   JOptionPane.showMessageDialog(null, "old password is wrong");
+		   }
+	   }catch(Exception e) {
+		   JOptionPane.showMessageDialog(null, e);
+	   }
+   }
+   
+   public static void changeSecurityQuestion(String email,String question,String answer,String password) {
+	    String Query="select * from userInformation where emailaddress='"+email+"' and password='"+password+"'";
+	    try {
+	    	ResultSet rs = db_operations.getdata(Query);
+	    	if(rs.next()) {
+	    		update(email,question,answer);
+	    	}else {
+	    		JOptionPane.showMessageDialog(null, "Password is  wrong");
+	    	}
+	    }catch(Exception e) {
+	    	JOptionPane.showMessageDialog(null, e);
+	    }
+	    
+   }
+   public static void update(String email,String sq,String answer) {
+	   String query="update userInformation set SecurityQuestion='"+sq+"',answer ='"+answer+"' where emailaddress ='"+email+"';";
+	   db_operations.updatedb(query,"user security question updated sucessfully");
+   }
+   public static String getsq(String email) {
+	   String Query="select * from userInformation where emailaddress='"+email+"';";
+	   String ans="";
+	    try {
+	    	ResultSet rs = db_operations.getdata(Query);
+	    	if(rs.next()) {
+	    		ans=rs.getString("SecurityQuestion");
+	    	}else {
+	    		JOptionPane.showMessageDialog(null, "Password is  wrong");
+	    	}
+	    }catch(Exception e) {
+	    	JOptionPane.showMessageDialog(null, e);
+	    }
+	    return ans;
+   }
 }
